@@ -41,7 +41,7 @@ $(document).ready(function () {
 
   // Display incorrect number selection
   var incorrectPopup = function () {
-    $("#incorrect-play").fadeIn(1000);
+    $("#incorrect-play").fadeIn(1000); // Show the incorrect play popup
   };
 
   var winGamePopup = function () {
@@ -199,6 +199,8 @@ $(document).ready(function () {
     $("#start-button-row").hide(); // Hide start button
     $("#dice-row").fadeIn(); // Show dice row
     $("#roll-dice-row").fadeIn(); // Show roll dice button
+    $("#1-player-scoreboard").fadeIn(); // Show the scoreboard
+    $("#give-up-button").fadeIn(); // Show the "Give Up" button
     setNumbers(); // Initialize the game
   });
 
