@@ -15,15 +15,13 @@ $(document).ready(function() {
   var $dice = $(".dice");
 
   // Dice background image classes array
-  var diceImageClasses = ["dice-1", "dice-2", "dice-3", "dice-4", "dice-5",
-    "dice-6"
-  ];
+  var diceImageClasses = ["dice-1", "dice-2", "dice-3", "dice-4", "dice-5", "dice-6"];
 
   // 2 variables to hold the index number for the dye background image class
   var dice1Index;
   var dice2Index;
 
-  // variable to hold the sum of the dice for comparison to players selections on Number Line - updated on every roll of the dice.
+  // variable to hold the sum of the dice for comparison to player selections on Number Line
   var diceSum = 0;
 
   // Constant to keep track of the number of times the user rolls the dice in each game
@@ -38,18 +36,7 @@ $(document).ready(function() {
   var $gamesPlayed = $(".games-played");
   var $gamesWon = $(".games-won");
 
-  var numberOfPlayers = 0;
-  var playersTurn = 0;
-  var gamesWonP1 = 0;
-  var gamesWonP2 = 0;
-  var $playersTurn = $("#players-turn");
-  var $p1NumberLine = $("#player-1-number-line");
-  var $p2NumberLine = $("#player-2-number-line");
-
-  // Additional variables for the give-up functionality
-  var $giveUpButton = $("#give-up-button");
-
-  // functions to give you a number between and including 0 & 5 for the index of dice background image class in the array diceImageClasses
+  // functions to give you a number between and including 0 & 5 for the index of dice background image classes
   var dice1Bkgnd;
   var dice2Bkgnd;
   var getDice1Bkgnd = function() {
@@ -62,7 +49,6 @@ $(document).ready(function() {
   };
 
   // Popup Event listeners & functionality
-  // Useful Popup variables
   var $winCover = $(".win-cover");
   var $winPopup = $("#win-popup");
 
@@ -79,10 +65,12 @@ $(document).ready(function() {
   $("#lets-play, #close-popup, .popup-cover").on("click", function() {
     $(".popup-cover").fadeOut(1000);
   });
+
   // function to display a popup when the incorrect numbers are selected
   var incorrectPopup = function() {
     $("#incorrect-play").fadeIn(1000);
   };
+
   // Popup window that displays if you win the game
   var winGamePopup = function() {
     $winCover.fadeIn(1000);
@@ -91,47 +79,40 @@ $(document).ready(function() {
   };
 
   // SOUND EFFECTS
-  // Dice Roll sound mp3 - from https://www.youtube.com/watch?v=o-1U19vao78
   var rollDicemp3 = function() {
     $("#dice-mp3")[0].play();
   };
 
-  // Number select sound effect - from https://www.youtube.com/watch?v=YzgtRonmJBk
   var numberSelect = function() {
     $("#number-select")[0].play();
   };
 
-  // Win crow cheering sound effect - from https://www.youtube.com/watch?v=barWV7RWkq0
   var crowdCheeringAudio = $("#crowd-cheering")[0];
   var crowdCheering = function() {
     crowdCheeringAudio.play();
   };
-  // Stop and re-set Crowd Cheering audio
+
   var crowdCheeringStop = function() {
     crowdCheeringAudio.pause();
     crowdCheeringAudio.currentTime = 0.0;
   };
-  // END SOUND EFFECTS
 
-  // Function that spins dice - see CSS file for source
+  // Function that spins dice
   var spinDice = function() {
     setTimeout(function() {
       $dice.addClass("roll-dice-1");
     }, 20);
     setTimeout(function() {
-      $dice.removeClass("roll-dice-1").addClass(
-          "roll-dice-2");
+      $dice.removeClass("roll-dice-1").addClass("roll-dice-2");
     }, 600);
     setTimeout(function() {
       $dice.removeClass("roll-dice-2");
     }, 1200);
   };
+
   var setNumbers = function() {
     for (let i = 1; i <= 10; i++) {
       $(`#num-${i}`).text(i);
-    }
-    for (let i = 1; i <= 10; i++) {
-      $(`#num-${i}-2`).text(i);
     }
 
     // remove dice background class
@@ -151,299 +132,138 @@ $(document).ready(function() {
     diceRolls = 0;
   };
 
-  // Function that calculates the remaining blocks
-  var calculateRemainingBlocks = function () {
-    var remainingSum = 0;
-    $(".col-1:not(.played)").each(function () {
-      remainingSum += parseInt($(this).text());
-    });
-    return remainingSum;
+  // Function that checks to see if you have won the game
+  var winGame = function() {
+    if (numbersPlayed.length === 10) {
+      winGamePopup();
+      gamesWon += 1;
+      $gamesWon.text(gamesWon);
+      gamesPlayed += 1;
+      $gamesPlayed.text(gamesPlayed);
+      $numDiv.removeClass("selected played");
+      compareDiceRolls();
+    } else {
+      return;
+    }
   };
 
-  // Function to display the remaining blocks and end the game
-  var giveUp = function () {
-    var remainingSum = calculateRemainingBlocks();
-    alert("You gave up! The sum of the remaining blocks is: " + remainingSum);
-    resetGame();
+  // function to black out numbers that have already been played successfully
+  var playedNumbers = function() {
+    for (let i = 0; i < $(".selected").length; i++) {
+      numbersPlayed.push($(".selected")[i]);
+    }
+    $(".selected").addClass("played");
+    $(".selected").text("");
+    $numDiv.removeClass("selected");
   };
 
-  // Function to reset the game
-  var resetGame = function () {
-    setNumbers();
-    diceRolls = 0;
-    numbersPlayed = [];
+  // update the current number of dice rolls
+  var diceRollCount = function() {
+    diceRolls++;
+    $(".current-dice-rolls").text(diceRolls);
+  };
+
+  var rollTheDice = function() {
+    // check to see if user has won game
+    winGame();
+
+    // play roll dice sound
+    rollDicemp3();
+
+    // Dice animation
+    spinDice();
+
+    // remove dice background class
+    $dice1.removeClass(dice1Bkgnd);
+    $dice2.removeClass(dice2Bkgnd);
+
+    // update dice1Bkgnd & dice2Bkgnd
+    getDice1Bkgnd();
+    getDice2Bkgnd();
+
+    // update variable diceSum with new sum of rolled dice
+    diceSum = (dice1Index + 1) + (dice2Index + 1);
+
+    // add new dice background class to update dice background image
+    $dice1.addClass(dice1Bkgnd);
+    $dice2.addClass(dice2Bkgnd);
+
+    // update the dice roll count variable
+    diceRollCount();
+  };
+
+  // Function that toggles the class "selected" on the numbers when clicked on
+  $numDiv.on("click", function() {
+    $(this).toggleClass("selected");
+    numberSelect();
+  });
+
+  // Function to COMPARE sum of dice to sum of selected numbers
+  var rollDiceCompleteTurn = function() {
     sumSelectedNumbers = 0;
-    $(".played").removeClass("played").text(function (index) {
-      return index + 1;
-    });
-    $(".selected").removeClass("selected");
+    var selectedNumbersArray = document.querySelectorAll(".selected");
+    for (let i = 0; i < selectedNumbersArray.length; i++) {
+      sumSelectedNumbers += parseInt(selectedNumbersArray[i].innerHTML);
+    }
+    if (sumSelectedNumbers === 0) {
+      rollTheDice();
+    } else if (sumSelectedNumbers !== diceSum) {
+      incorrectPopup();
+      $numDiv.removeClass("selected");
+    } else {
+      playedNumbers();
+      rollTheDice();
+    }
+  };
+
+  // Event listener on Roll Dice button and individual Dice to roll the dice and check selected numbers
+  $("#roll-dice, .dice").on("click", function() {
+    rollDiceCompleteTurn();
+  });
+
+  // Update record dice rolls with current number
+  var compareDiceRolls = function() {
+    if (recordDiceRolls === 0) {
+      recordDiceRolls = diceRolls;
+      $recordDiceRolls.text(recordDiceRolls);
+    } else if (recordDiceRolls < diceRolls) {
+      $recordDiceRolls.text(diceRolls);
+    } else {
+      return;
+    }
+  };
+
+  // Function to handle the "Give Up" action
+  var giveUp = function() {
+    alert("You have given up! Game over.");
+    // Reset the game after giving up
+    setNumbers();
+    numbersPlayed = [];
+    diceRolls = 0;
+    sumSelectedNumbers = 0;
+    $(".current-dice-rolls").text(diceRolls);
     crowdCheeringStop();
   };
 
-  // Event listener to us the return/enter key to roll the dice
-  var returnRollDice = function() {
-    $(document).on("keypress", function(event) {
-      if (event.which === 13) {
-        rollDiceCompleteTurn();
-      }
-    });
-  };
-
-
-  // Event listener to change button text to black on mouse enter and back to white on mouse leave
-  var mouseOverButton = function() {
-    $yellowBkgnd.on("mouseenter", function() {
-      $(this).attr("style",
-          "color:#000; box-shadow:none");
-    });
-    $yellowBkgnd.on("mouseleave", function() {
-      $(this).removeAttr("style",
-          "color:#000; box-shadow:none");
-    });
-    $playersTurn.off("mouseenter");
-    $playersTurn.off("mouseleave");
-  };
-  mouseOverButton();
-
-  // Hover effect for Player select buttons
-  var $1playerButton = $("#1-player-button");
-  var $2playerButton = $("#2-player-button");
-
-  var mouseEnterButton1 = function(button) {
-    button.on("mouseenter", function() {
-      $(this).attr("style",
-          "color:#000; box-shadow:none");
-    });
-  };
-  mouseEnterButton1($1playerButton);
-  mouseEnterButton1($2playerButton);
-
-  var mouseLeaveButton1 = function(button) {
-    button.on("mouseleave", function() {
-      $(this).removeAttr("style",
-          "color:#000; box-shadow:none");
-    });
-  };
-  mouseLeaveButton1($1playerButton);
-  mouseLeaveButton1($2playerButton);
-  // End hover effect for Player select buttons
-
-  // Event listener on 1 Player button
-  $1playerButton.on("click", function() {
-    $(this).off("mouseleave");
-    $2playerButton.removeAttr("style",
-        "color:#000; box-shadow:none");
-    mouseEnterButton1($2playerButton);
-    mouseLeaveButton1($2playerButton);
-    $(".col-1").removeClass("col-1-2-player");
-    $p2NumberLine.hide();
-    $("#player-2-id, #player-1-id").addClass("hidden");
-    numberOfPlayers = 1;
+  // Add event listener to the "Give Up" button
+  $("#give-up-button").on("click", function() {
+    giveUp();
   });
 
-  // Event listener on 2 Player button
-  $2playerButton.on("click", function() {
-    $(this).off("mouseleave");
-    $1playerButton.removeAttr("style",
-        "color:#000; box-shadow:none");
-    mouseEnterButton1($1playerButton);
-    mouseLeaveButton1($1playerButton);
-    $(".col-1").addClass("col-1-2-player");
-    $p2NumberLine.show();
-    $("#player-2-id, #player-1-id").removeClass("hidden");
-    numberOfPlayers = 2;
-  });
-
-  // function to set event listener on Start Game button to run once number of players has been selected
-  $("#start-game").on("click", function() {
-    if (numberOfPlayers === 0) {
-      alert("Please select the number of players.");
-    } else if (numberOfPlayers === 1) {
-      onePlayerGame();
-      $("#welcome-scoreboard, #number-of-players, #start-button-row").hide();
-      $("#1-player-scoreboard, #dice-row, #roll-dice-row").fadeIn();
-      $("#roll-dice").text("Roll Again");
-    } else if (numberOfPlayers === 2) {
-      playersTurn = 1;
-      twoPlayerGame();
-      $("#welcome-scoreboard, #number-of-players, #start-button-row").hide();
-      $("#2-player-scoreboard, #dice-row, #roll-dice-row").fadeIn();
-      $("#roll-dice").text("Play Selected Numbers or Roll");
-    }
-  });
-
-  // Begin 1 player Game funcitonality
-  var onePlayerGame = function() {
-    // Event listener to change button text to black on mouse enter and back to white on mouse leave
-    mouseOverButton();
-
-    // Function that checks to see if you have won the game
-    var winGame = function() {
-      if (numbersPlayed.length === 10) {
-        winGamePopup();
-        gamesWon += 1;
-        $gamesWon.text(gamesWon);
-        gamesPlayed += 1;
-        $gamesPlayed.text(gamesPlayed);
-        $numDiv.removeClass("selected played");
-        compareDiceRolls();
-      } else {
-        return;
-      }
-    };
-
-    // function to black out numbers that have already been played successfully
-    var playedNumbers = function() {
-      for (let i = 0; i < $(".selected").length; i++) {
-        numbersPlayed.push($(".selected")[i]);
-      }
-      $(".selected").addClass("played");
-      $(".selected").text("");
-      $numDiv.removeClass("selected");
-    };
-
-    // update the current number of dice rolls
-    var diceRollCount = function() {
-      diceRolls++;
-      $(".current-dice-rolls").text(diceRolls);
-    };
-    var rollTheDice = function() {
-      // check to see if user has won game
-      winGame();
-
-      // play roll dice sound
-      rollDicemp3();
-
-      // Dice animation
-      spinDice();
-
-      // remove dice background class
-      $dice1.removeClass(dice1Bkgnd);
-      $dice2.removeClass(dice2Bkgnd);
-
-      // update dice1Bkgnd & dice2Bkgnd
-      getDice1Bkgnd();
-      getDice2Bkgnd();
-
-      // update variable diceSum with new sum of rolled dice
-      diceSum = (dice1Index + 1) + (dice2Index + 1);
-      // add new dice background class to update dice background image
-      $dice1.addClass(dice1Bkgnd);
-      $dice2.addClass(dice2Bkgnd);
-
-      // update the dice roll count variable
-      diceRollCount();
-    };
-
-    // Function that toggles the class "selected" on the numbers when clicked on
-    $numDiv.on("click", function() {
-      $(this).toggleClass("selected");
-      numberSelect();
-    });
-
-    // Event listener on number keys to be used to select numbers in number line
-    $(document).on("keypress", function(event) {
-      if (event.which === 49) {
-        $("#num-1").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 50) {
-        $("#num-2").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 51) {
-        $("#num-3").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 52) {
-        $("#num-4").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 53) {
-        $("#num-5").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 54) {
-        $("#num-6").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 55) {
-        $("#num-7").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 56) {
-        $("#num-8").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 57) {
-        $("#num-9").toggleClass("selected");
-        numberSelect();
-      } else if (event.which === 48) {
-        $("#num-10").toggleClass("selected");
-        numberSelect();
-      }
-    });
-    // Event Listener on "return/enter" key to roll the dice and check selected numbers
-    var returnRollDice = function() {
-      $(document).on("keypress", function(event) {
-        if (event.which === 13) {
-          rollDiceCompleteTurn();
-        }
-      });
-    };
-
-    // Function to COMPARE sum of dice to sum of selected numbers; if sum of selected numbers = 0 then roll the dice; if sum of selected numbers != sum of dice then alert; if sum of selected numbers = sum of dice then roll the dice and clear the selected numbers from Number Line - add class "played"
-    var rollDiceCompleteTurn = function() {
-      sumSelectedNumbers = 0;
-      var selectedNumbersArray = document.querySelectorAll(
-          ".selected");
-      for (let i = 0; i < selectedNumbersArray.length; i++) {
-        sumSelectedNumbers += parseInt(selectedNumbersArray[i].innerHTML);
-      }
-      if (sumSelectedNumbers === 0) {
-        rollTheDice();
-      } else if (sumSelectedNumbers !== diceSum) {
-        incorrectPopup();
-        $numDiv.removeClass("selected");
-      } else {
-        playedNumbers();
-        rollTheDice();
-      }
-    };
-    // Event listener on Roll Dice button and individual Dye to roll the dice and check selected numbers
-    var rollDiceEventListener = function() {
-      $("#roll-dice, .dice").on("click", function() {
-        rollDiceCompleteTurn();
-      });
-    };
-
-    // Update record dice rolls with current number
-    var compareDiceRolls = function() {
-      if (recordDiceRolls === 0) {
-        recordDiceRolls = diceRolls;
-        $recordDiceRolls.text(recordDiceRolls);
-      } else if (recordDiceRolls < diceRolls) {
-        $recordDiceRolls.text(diceRolls);
-      } else {
-        return;
-      }
-    };
-
-    // Event Listener to close win popup window and re-set game
-    $("#close-win-popup, #play-again, .win-cover").on("click", function() {
-      $winCover.fadeOut(1000);
-      $winPopup.fadeOut(1000);
-      setNumbers();
-      diceRolls = 0;
-      diceRollCount();
-      numbersPlayed = [];
-      sumSelectedNumbers = 0;
-      crowdCheeringStop();
-    });
-
-    // Add event listener for the give-up button
-    $giveUpButton.on("click", function () {
-      giveUp();
-    });
-
+  // Event Listener to close win popup window and reset the game
+  $("#close-win-popup, #play-again, .win-cover").on("click", function() {
+    $winCover.fadeOut(1000);
+    $winPopup.fadeOut(1000);
     setNumbers();
-    rollDicemp3();
-    spinDice();
-    returnRollDice();
-    rollDiceEventListener();
-    mouseOverButton();
-    rollTheDice();
-  }; // End 1 player game functionality
+    diceRolls = 0;
+    diceRollCount();
+    numbersPlayed = [];
+    sumSelectedNumbers = 0;
+    crowdCheeringStop();
+  });
+
+  setNumbers();
+  rollDicemp3();
+  spinDice();
+  rollTheDice();
 });
