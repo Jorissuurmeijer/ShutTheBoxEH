@@ -36,6 +36,9 @@ $(document).ready(function() {
   var $gamesPlayed = $(".games-played");
   var $gamesWon = $(".games-won");
 
+  // Game started flag
+  var gameStarted = false;
+
   // functions to give you a number between and including 0 & 5 for the index of dice background image classes
   var dice1Bkgnd;
   var dice2Bkgnd;
@@ -194,8 +197,10 @@ $(document).ready(function() {
 
   // Function that toggles the class "selected" on the numbers when clicked on
   $numDiv.on("click", function() {
-    $(this).toggleClass("selected");
-    numberSelect();
+    if (gameStarted) { // Only allow selection if the game has started
+      $(this).toggleClass("selected");
+      numberSelect();
+    }
   });
 
   // Function to COMPARE sum of dice to sum of selected numbers
@@ -269,6 +274,7 @@ $(document).ready(function() {
     // Hide the game space and go back to the start screen
     $("#game-space").hide();
     $("#welcome-scoreboard").show();
+    gameStarted = false; // Reset the gameStarted flag
   });
 
   // Event Listener to close win popup window and reset the game
@@ -281,6 +287,17 @@ $(document).ready(function() {
     numbersPlayed = [];
     sumSelectedNumbers = 0;
     crowdCheeringStop();
+  });
+
+  // Start Game button functionality
+  $("#start-game").on("click", function() {
+    gameStarted = true; // Enable selecting boxes
+    $("#welcome-scoreboard").hide(); // Hide the start screen
+    $("#game-space").show(); // Show the game area
+    setNumbers();
+    rollDicemp3();
+    spinDice();
+    rollTheDice();
   });
 
   setNumbers();
