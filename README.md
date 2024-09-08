@@ -2,7 +2,7 @@
 
 ![Imgur](http://i.imgur.com/KkBikXum.jpg)  
 
-https://jorissuurmeijer.github.io/ShutTheBoxEH/  
+Almost all code is used from https://github.com/markleds/ShutTheBox by Mark Ledbetter. However, the rules in this version are changed to a version I used to play. You can play it on: https://jorissuurmeijer.github.io/ShutTheBoxEH/ 
 
 #### by [Mark Ledbetter](http://markledbetterdesigns.com/)
 
