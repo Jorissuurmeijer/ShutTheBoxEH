@@ -1,216 +1,166 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Shut The Box by Mark Ledbetter</title>
+<head>
+  <meta charset="utf-8">
+  <title>Shut The Box by Mark Ledbetter</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="thumbnail" content="images/shut-the-box-meta-image.jpg" />
-    <meta property="og:title" content="Shut The Box by Mark Ledbetter">
-    <meta property="og:description" content="Shut The Box is a single player numbers and dice game web app created by Mark Ledbetter.">
-    <meta property="og:image" content="images/shut-the-box-meta-image.jpg">
-    <meta property="og:url" content="https://markleds.github.io/ShutTheBox/">
-    <meta name="twitter:title" content="Shut The Box by Mark Ledbetter">
-    <meta name="twitter:description" content=" Shut The Box is a single player numbers and dice game web app created by Mark Ledbetter.">
-    <meta name="twitter:image" content="images/shut-the-box-meta-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="thumbnail" content="images/shut-the-box-meta-image.jpg" />
+  <meta property="og:title" content="Shut The Box by Mark Ledbetter">
+  <meta property="og:description" content="Shut The Box is a single player numbers and dice game web app created by Mark Ledbetter.">
+  <meta property="og:image" content="images/shut-the-box-meta-image.jpg">
+  <meta property="og:url" content="https://markleds.github.io/ShutTheBox/">
+  <meta name="twitter:title" content="Shut The Box by Mark Ledbetter">
+  <meta name="twitter:description" content=" Shut The Box is a single player numbers and dice game web app created by Mark Ledbetter.">
+  <meta name="twitter:image" content="images/shut-the-box-meta-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Changa+One" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Changa+One" rel="stylesheet">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
+  <script src="js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <button id="instructions" class="how-to-play yellow-bkgnd" type="button" name="button">How To Play</button>
+    <h1><span class="animated flipInX">Shut The Box</span></h1>
+  </header>
 
-    <script src="js/vendor/jquery-3.2.1.min.js"></script>
-    <script src="js/app.js"></script>
-  </head>
-  <body>
-    <div class="container">
+  <main>
+    <!-- Number Line div containing numbers 1 through 10 -->
+    <div id="player-1-number-line" class="number-line-1">
+      <div id="num-1" class="col-1"></div>
+      <div id="num-2" class="col-1"></div>
+      <div id="num-3" class="col-1"></div>
+      <div id="num-4" class="col-1"></div>
+      <div id="num-5" class="col-1"></div>
+      <div id="num-6" class="col-1"></div>
+      <div id="num-7" class="col-1"></div>
+      <div id="num-8" class="col-1"></div>
+      <div id="num-9" class="col-1"></div>
+      <div id="num-10" class="col-1"></div>
+    </div>
 
-    <header>
-      <button id="instructions" class="how-to-play yellow-bkgnd" type="button" name="button">How To Play</button>
-      <h1><span class="animated flipInX">Shut The Box</span></h1>
-    </header>
-    <main>
-      <!-- Number Line div containing numbers 1 through 12 -->
-      <div id="player-1-number-line" class="number-line-1">
-        <div id="player-1-id" class="col-1 player-id hidden">Player 1</div>
-        <div id="num-1" class="col-1"></div>
-        <div id="num-2" class="col-1"></div>
-        <div id="num-3" class="col-1"></div>
-        <div id="num-4" class="col-1"></div>
-        <div id="num-5" class="col-1"></div>
-        <div id="num-6" class="col-1"></div>
-        <div id="num-7" class="col-1"></div>
-        <div id="num-8" class="col-1"></div>
-        <div id="num-9" class="col-1"></div>
-        <div id="num-10" class="col-1"></div>
-      </div>
-      <div id="player-2-number-line" class="not-players-turn number-line-1" style="display:none">
-        <div id="player-2-id" class="col-1 col-2-2-player player-id hidden">Player 2</div>
-        <div id="num-1-2" class="col-2 col-2-2-player"></div>
-        <div id="num-2-2" class="col-2 col-2-2-player"></div>
-        <div id="num-3-2" class="col-2 col-2-2-player"></div>
-        <div id="num-4-2" class="col-2 col-2-2-player"></div>
-        <div id="num-5-2" class="col-2 col-2-2-player"></div>
-        <div id="num-6-2" class="col-2 col-2-2-player"></div>
-        <div id="num-7-2" class="col-2 col-2-2-player"></div>
-        <div id="num-8-2" class="col-2 col-2-2-player"></div>
-        <div id="num-9-2" class="col-2 col-2-2-player"></div>
-        <div id="num-10-2" class="col-2 col-2-2-player"></div>
-      </div>
-      <!-- End Number Line div containing numbers 1 through 12 -->
-      <div id="game-space" class="main-space">
-        <!-- Dice and roll buttons -->
-        <div id="dice-board" class="" >
-          <div id="number-of-players" class="button-row" style="display:">
-            <button id="1-player-button" class="dice-button yellow-bkgnd player-button" >1 Player</button>
-            <button id="2-player-button" class="dice-button yellow-bkgnd player-button"  >2 Players</button>
-          </div>
-
-          <div id="dice-row" style="display:none">
-            <div id="dice-1" class="dice"></div>
-            <div id="dice-2" class="dice"></div>
-          </div>
-          <div id="start-button-row" class="button-row">
-            <button id="start-game" class="dice-button yellow-bkgnd" >Start Game</button>
-          </div>
-          <div id="roll-dice-row" class="button-row" style="display:none">
-            <button id="roll-dice" class="dice-button yellow-bkgnd" >Roll Dice</button>
-            <!-- <button id="play-again" class="dice-button yellow-bkgnd"  >Play Selected</button> -->
-          </div>
+    <div id="game-space" class="main-space">
+      <!-- Dice and roll buttons -->
+      <div id="dice-board">
+        <div id="start-button-row" class="button-row">
+          <button id="start-game" class="dice-button yellow-bkgnd">Start Game</button>
         </div>
-        <!-- End Dice and roll buttons -->
+        <div id="dice-row" style="display:none">
+          <div id="dice-1" class="dice"></div>
+          <div id="dice-2" class="dice"></div>
+        </div>
+        <div id="roll-dice-row" class="button-row" style="display:none">
+          <button id="roll-dice" class="dice-button yellow-bkgnd">Roll Dice</button>
+        </div>
+      </div>
+      <!-- End Dice and roll buttons -->
 
-        <!-- Begin Scoreboard area -->
-        <div id="scoreboard" >
-          <div id="welcome-scoreboard" class="player-selection-intro">
-            <h2>Welcome to Shut The Box</h2>
-            <p>To begin the game, please select how many players there are using the buttons to the left, then click the "Start Game" button to begin.</p>
-            <p class="small-text"><em>For instructions on how to play the game, click the "How To Play" button in the top right corner of your screen.</em></p>
-          </div>
-          <div id="2-player-scoreboard" style="display:none">
-            <div><button id="players-turn" class="dice-button yellow-bkgnd players-turn-button" type="button" name="button">Player 1's Turn</button></div>
-            <h2>Scoreboard</h2>
-            <div class="bar1"></div>
-            <h3>Games Won</h3>
-            <div id="2-player-games-won" class="score-row">
-              <div id="player-1-record" class="score-block">
-                <h3>Player 1</h3>
-                <span class="total-games-won-1">0</span>
-              </div>
-              <div id="player-2-record" class="score-block">
-                <h3>Player 2</h3>
-                <span class="total-games-won-2">0</span>
-              </div>
+      <!-- Scoreboard area -->
+      <div id="scoreboard">
+        <div id="1-player-scoreboard" style="display:none">
+          <h2>Scoreboard</h2>
+          <div class="bar1"></div>
+          <div id="score-row-1" class="score-row">
+            <div id="number-dice-rolls" class="score-block">
+              <h3>Dice Rolls</h3>
+              <span class="current-dice-rolls">0</span>
+            </div>
+            <div id="lowest-dice-rolls" class="score-block">
+              <h3>Fewest Dice Rolls</h3>
+              <span class="record-dice-rolls">0</span>
             </div>
           </div>
-          <div id="1-player-scoreboard" style="display:none">
-            <h2>Scoreboard</h2>
-            <div class="bar1"></div>
-            <div id="score-row-1" class="score-row">
-              <div id="number-dice-rolls" class="score-block">
-                <h3>Dice Rolls</h3>
-                <span class="current-dice-rolls">0</span>
-              </div>
-              <div id="lowest-dice-rolls" class="score-block">
-                <h3>Fewest Dice Rolls</h3>
-                <span class="record-dice-rolls">0</span>
-              </div>
+          <div id="score-row-2" class="score-row">
+            <div id="current-time" class="score-block">
+              <div class="top-bar"></div>
+              <h3>Timer</h3>
+              <span class="timer">00:00</span>
             </div>
-            <div id="score-row-2" class="score-row">
-              <div id="current-time" class="score-block">
-                <div class="top-bar"></div>
-                <h3>Timer</h3>
-                <span class="timer">00:00</span>
-
-              </div>
-              <div id="best-time" class="score-block">
-                <div class="top-bar"></div>
-                <h3>Best Time</h3>
-                <span class="record-time">00:00</span>
-              </div>
+            <div id="best-time" class="score-block">
+              <div class="top-bar"></div>
+              <h3>Best Time</h3>
+              <span class="record-time">00:00</span>
             </div>
-            <div id="score-row-3" class="score-row">
-              <div id="number-games-played" class="score-block">
-                <div class="top-bar"></div>
-                <h3>Games Played</h3>
-                <span class="games-played">0</span>
-
-              </div>
-              <div id="number-games-won" class="score-block">
-                <div class="top-bar"></div>
-                <h3>Games Won</h3>
-                <span class="games-won">0</span>
-              </div>
+          </div>
+          <div id="score-row-3" class="score-row">
+            <div id="number-games-played" class="score-block">
+              <div class="top-bar"></div>
+              <h3>Games Played</h3>
+              <span class="games-played">0</span>
+            </div>
+            <div id="number-games-won" class="score-block">
+              <div class="top-bar"></div>
+              <h3>Games Won</h3>
+              <span class="games-won">0</span>
             </div>
           </div>
         </div>
-        <button id="give-up-button" class="yellow-bkgnd">Give Up</button>
-        <!-- End Scoreboard area -->
       </div>
-    </main>
-    <!-- pop up to explain how to play the game -->
-    <div id="how-to-popup" class="popup-cover" style="display:none">
-      <div id="close-popup" class="close-popup">X</div>
-      <div class="popup-window">
-        <h2>How To Play</h2>
-        The object of the game is to clear all of the numbers 1 - 10 from the red number line.</br>
-        Single Player Game
-        <ul>
-          <li>Start the game by rolling the dice.</li>
-          <li>Select a number or multiple numbers from the red number line that add up to the sum of the dots on the displayed dice.</li>
-          <li>Roll again and repeat until the number line is clear.</li>
-          <li>If you are unable to match the remaining numbers in the red number line to the dice, continue rolling until you have a playable match.</li>
-        </ul>
-        Two Player Game
-        <ul>
-          <li>The dice are rolled to start the game and the top player on the board goes first.</li>
-          <li>In turn, each player selects a number or multiple numbers from their red number line that add up to the sum of the dots on the displayed dice.</li>
-          <li>To complete the turn, click the "Play Selected Numbers" button.</li>
-          <li>If a player is unable to match any of the remaining numbers in their red number line to the sum of the dice, that player ends their turn by clicking the "Play Selected Numbers" button.</li>
-          <li>The game ends when one player has cleared all of the numbers from their number line.</li>
-        </ul>
-        <button id="lets-play" class="popup-button yellow-bkgnd" type="button" name="button">Let's Play!</button>
-      </div>
+      <button id="give-up-button" class="yellow-bkgnd" style="display:none;">Give Up</button>
+      <!-- End Scoreboard area -->
     </div>
+  </main>
 
-    <!-- Alert for when selected numbers do not add up to sum of dice -->
-    <div id="incorrect-play" class="popup-cover" style="display:none">
-      <div id="close-popup" class="close-popup">X</div>
-      <div id="incorrect-play-popup" class="popup-window popup-window-small">
-        Your selected number(s) does not add up to the sum of the dots on the displayed dice. Please select again.
-        <button id="lets-play" class="popup-button yellow-bkgnd" type="button" name="button">Back to the Game</button>
-      </div>
-    </div>
-
-    <!-- Popup for when user wins the game -->
-    <div class="win-cover" style="display:none">
-      <div id="close-win-popup" class="close-popup">X</div>
-      <div id="win-popup" class="popup-window" style="display:none">
-          <h2>CONGRATULATIONS!</h2>
-          <h2>YOU WIN!!!</h2>
-        <button id="play-again" class="popup-button yellow-bkgnd" type="button" name="button">Play Again</button>
+  <!-- How to play popup -->
+  <div id="how-to-popup" class="popup-cover" style="display:none">
+    <div id="close-popup" class="close-popup">X</div>
+    <div class="popup-window">
+      <h2>How To Play</h2>
+      The object of the game is to clear all of the numbers 1 - 10 from the red number line.<br>
+      Single Player Game:
+      <ul>
+        <li>Start the game by rolling the dice.</li>
+        <li>Select a number or multiple numbers from the red number line that add up to the sum of the dots on the displayed dice.</li>
+        <li>Roll again and repeat until the number line is clear.</li>
+        <li>If you are unable to match the remaining numbers in the red number line to the dice, continue rolling until you have a playable match.</li>
+      </ul>
+      <button id="lets-play" class="popup-button yellow-bkgnd" type="button" name="button">Let's Play!</button>
     </div>
   </div>
-    <audio id="dice-mp3" display="none">
-      <source src="audio/dice-roll.ogg" type="audio/ogg">
-      <source src="audio/dice-roll.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="number-select" display="none">
-      <source src="audio/number-select-2.ogg" type="audio/ogg">
-      <source src="number-select-2.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="crowd-cheering" display="none">
-      <source src="audio/crowd-cheering.ogg" type="audio/ogg">
-      <source src="audio/crowd-cheering.mp3" type="audio/mpeg">
-    </audio>
-    <div class="copyright">&copy; Mark Ledbetter</div>
+
+  <!-- Incorrect play popup -->
+  <div id="incorrect-play" class="popup-cover" style="display:none">
+    <div id="close-popup" class="close-popup">X</div>
+    <div id="incorrect-play-popup" class="popup-window popup-window-small">
+      Your selected number(s) does not add up to the sum of the dots on the displayed dice. Please select again.
+      <button id="lets-play" class="popup-button yellow-bkgnd" type="button" name="button">Back to the Game</button>
+    </div>
   </div>
 
-  </body>
+  <!-- Win popup -->
+  <div class="win-cover" style="display:none">
+    <div id="close-win-popup" class="close-popup">X</div>
+    <div id="win-popup" class="popup-window" style="display:none">
+      <h2>CONGRATULATIONS!</h2>
+      <h2>YOU WIN!!!</h2>
+      <button id="play-again" class="popup-button yellow-bkgnd" type="button" name="button">Play Again</button>
+    </div>
+  </div>
+
+  <!-- Audio elements -->
+  <audio id="dice-mp3" display="none">
+    <source src="audio/dice-roll.ogg" type="audio/ogg">
+    <source src="audio/dice-roll.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="number-select" display="none">
+    <source src="audio/number-select-2.ogg" type="audio/ogg">
+    <source src="number-select-2.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="crowd-cheering" display="none">
+    <source src="audio/crowd-cheering.ogg" type="audio/ogg">
+    <source src="audio/crowd-cheering.mp3" type="audio/mpeg">
+  </audio>
+  <div class="copyright">&copy; Mark Ledbetter</div>
+</div>
+</body>
 </html>
