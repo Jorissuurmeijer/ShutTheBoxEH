@@ -186,8 +186,12 @@ $(document).ready(function () {
     sumSelectedNumbers = 0;
     $(".current-dice-rolls").text(diceRolls);
     crowdCheeringStop();
+
+    gamesPlayed += 1;
+    $gamesPlayed.text(gamesPlayed);
     // Remove the "selected" class from any selected number boxes
-    $numDiv.removeClass("selected");
+    $numDiv.removeClass("selected played");
+    compareDiceRolls();
   };
 
 
