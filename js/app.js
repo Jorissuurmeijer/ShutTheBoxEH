@@ -17,7 +17,7 @@ $(document).ready(function() {
   // Dice background image classes array
   var diceImageClasses = ["dice-1", "dice-2", "dice-3", "dice-4", "dice-5", "dice-6"];
 
-  // 2 variables to hold the index number for the dye background image class
+  // 2 variables to hold the index number for the dice background image class
   var dice1Index;
   var dice2Index;
 
@@ -294,14 +294,15 @@ $(document).ready(function() {
     gameStarted = true; // Enable selecting boxes
     $("#welcome-scoreboard").hide(); // Hide the start screen
     $("#game-space").show(); // Show the game area
+    $("#dice-row").show(); // Show the dice area
+    $("#roll-dice-row").show(); // Show the roll dice button
     setNumbers();
     rollDicemp3();
     spinDice();
     rollTheDice();
   });
 
+  // Initialize the game in its starting state
+  $("#game-space").hide(); // Make sure game area is hidden on load
   setNumbers();
-  rollDicemp3();
-  spinDice();
-  rollTheDice();
 });
