@@ -200,15 +200,13 @@ $(document).ready(function () {
 
   // Add event listener to close the "Give Up" popup
   $("#close-give-up-popup").on("click", function () {
-    giveUp();
     $(".give-up-cover").fadeOut(1000); // Close the popup
   });
 
-  //
-  // // Add event listener to the "Give Up" button
-  // $("#give-up-button").on("click", function () {
-  //   giveUp();
-  // });
+  // Add event listener to the "Give Up" button
+  $("#give-up-button").on("click", function () {
+    giveUp();
+  });
 
   // Close win popup and reset game
   $("#close-win-popup, #play-again, .win-cover").on("click", function () {
