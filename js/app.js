@@ -169,14 +169,27 @@ $(document).ready(function () {
 
   // Function to handle the "Give Up" action
   var giveUp = function () {
-    alert("You have given up! Game over.");
+    var sumRemainingNumbers = 0;
+
+    // Loop through all the number boxes and sum up the values of the ones that are not played
+    $numDiv.each(function () {
+      if (!$(this).hasClass("played")) {
+        sumRemainingNumbers += parseInt($(this).text()) || 0; // Use 0 for empty or non-number text
+      }
+    });
+
+    alert("You have given up! Game over. The sum of the numbers left on the boxes is: " + sumRemainingNumbers);
+
     setNumbers();
     numbersPlayed = [];
     diceRolls = 0;
     sumSelectedNumbers = 0;
     $(".current-dice-rolls").text(diceRolls);
     crowdCheeringStop();
+    // Remove the "selected" class from any selected number boxes
+    $numDiv.removeClass("selected");
   };
+
 
   // Add event listener to the "Give Up" button
   $("#give-up-button").on("click", function () {
