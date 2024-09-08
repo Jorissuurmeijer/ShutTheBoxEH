@@ -178,11 +178,7 @@ $(document).ready(function () {
       }
     });
 
-    //alert("You have given up! Game over. The sum of the numbers left on the boxes is: " + sumRemainingNumbers);
-
-    // Show the custom give-up popup with the calculated sum
-    $(".give-up-message").text("The sum of the numbers left on the boxes is: " + sumRemainingNumbers);
-    $(".give-up-cover").fadeIn(1000); // Show the "give up" popup
+    alert("You have given up! Game over. The sum of the numbers left on the boxes is: " + sumRemainingNumbers);
 
     setNumbers();
     numbersPlayed = [];
@@ -198,10 +194,6 @@ $(document).ready(function () {
     compareDiceRolls();
   };
 
-  // Add event listener to close the "Give Up" popup
-  $("#close-give-up-popup").on("click", function () {
-    $(".give-up-cover").fadeOut(1000); // Close the popup
-  });
 
   // Add event listener to the "Give Up" button
   $("#give-up-button").on("click", function () {
