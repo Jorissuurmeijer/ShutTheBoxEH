@@ -2,7 +2,7 @@
 
 ![Imgur](http://i.imgur.com/KkBikXum.jpg)  
 
-https://markleds.github.io/ShutTheBox/  
+https://jorissuurmeijer.github.io/ShutTheBoxEH/  
 
 #### by [Mark Ledbetter](http://markledbetterdesigns.com/)
 
