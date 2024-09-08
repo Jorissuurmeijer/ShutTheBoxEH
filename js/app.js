@@ -176,7 +176,10 @@ $(document).ready(function () {
     sumSelectedNumbers = 0;
     $(".current-dice-rolls").text(diceRolls);
     crowdCheeringStop();
+    // Remove the "selected" class from any selected number boxes
+    $numDiv.removeClass("selected");
   };
+
 
   // Add event listener to the "Give Up" button
   $("#give-up-button").on("click", function () {
