@@ -233,7 +233,7 @@ $(document).ready(function() {
     }
   };
 
-  // Function to calculate the sum of unselected blocks
+  // Function to calculate the sum of unselected boxes
   var calculateUnselectedSum = function() {
     var unselectedSum = 0;
     $(".col-1").each(function() {
@@ -247,17 +247,9 @@ $(document).ready(function() {
   // Function to handle the "Give Up" action
   var giveUp = function() {
     var unselectedSum = calculateUnselectedSum();
-    alert(`You have given up! Game over. The sum of the unselected blocks is: ${unselectedSum}`);
-
-    // Reset the game and show the starting screen
-    $("#game-area").hide(); // Hide the game area
-    $("#welcome-scoreboard").show(); // Show the starting page
-    setNumbers();
-    numbersPlayed = [];
-    diceRolls = 0;
-    sumSelectedNumbers = 0;
-    $(".current-dice-rolls").text(diceRolls);
-    crowdCheeringStop();
+    // Show give up popup and display the sum of unselected boxes
+    $("#unselected-sum").text(unselectedSum);
+    $("#give-up-popup").fadeIn(1000);
   };
 
   // Add event listener to the "Give Up" button
@@ -265,12 +257,24 @@ $(document).ready(function() {
     giveUp();
   });
 
+  // Event Listener for closing the "Give Up" popup and resetting the game
+  $("#close-give-up-popup, #go-home").on("click", function() {
+    $("#give-up-popup").fadeOut(1000);
+    // Reset the game and go back to the home screen
+    setNumbers();
+    numbersPlayed = [];
+    diceRolls = 0;
+    $(".current-dice-rolls").text(diceRolls);
+    crowdCheeringStop();
+    // Hide the game space and go back to the start screen
+    $("#game-space").hide();
+    $("#welcome-scoreboard").show();
+  });
+
   // Event Listener to close win popup window and reset the game
   $("#close-win-popup, #play-again, .win-cover").on("click", function() {
     $winCover.fadeOut(1000);
     $winPopup.fadeOut(1000);
-    $("#game-area").hide(); // Hide the game area
-    $("#welcome-scoreboard").show(); // Show the starting page
     setNumbers();
     diceRolls = 0;
     diceRollCount();
@@ -279,17 +283,8 @@ $(document).ready(function() {
     crowdCheeringStop();
   });
 
-  // Start the game by hiding the starting screen and showing the game area
-  $("#start-game").on("click", function() {
-    $("#welcome-scoreboard").hide();
-    $("#game-area").show();
-    setNumbers();
-    rollDicemp3();
-    spinDice();
-    rollTheDice();
-  });
-
-  // Initialize by showing the starting screen and hiding the game area
-  $("#welcome-scoreboard").show();
-  $("#game-area").hide();
+  setNumbers();
+  rollDicemp3();
+  spinDice();
+  rollTheDice();
 });
