@@ -202,6 +202,11 @@ $(document).ready(function () {
     setNumbers(); // Initialize the game
   });
 
+  // Event listener for "Back to the Game" and "Close" buttons in the incorrect popup
+  $("#lets-play, #close-popup").on("click", function () {
+    $("#incorrect-play").fadeOut(1000); // Close the incorrect popup
+  });
+
   setNumbers();
   rollDicemp3();
   spinDice();
