@@ -55,8 +55,19 @@ $(document).ready(function () {
     $("#dice-mp3")[0].play();
   };
 
+  // var numberSelect = function () {
+  //   $("#number-select")[0].play();
+  // };
+
   var numberSelect = function () {
+    // Check if the clicked number is already played
+    if ($(this).hasClass("played")) {
+      alert("This number has already been used. Please select a different number.");
+      return; // Exit the function to prevent further execution
+    }
     $("#number-select")[0].play();
+    // $(this).toggleClass("selected");
+    // numberSelect();
   };
 
   var crowdCheeringAudio = $("#crowd-cheering")[0];
