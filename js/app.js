@@ -149,15 +149,18 @@ $(document).ready(function () {
       $numDiv.removeClass("selected");
     }
     else {
+      let validSelection = true; // Flag to track if all selections are valid
       for (let i = 0; i < selectedNumbersArray.length; i++) {
-        if(selectedNumbersArray[i].hasClass("played")){
+        if ($(selectedNumbersArray[i]).hasClass("played")) {  // Correct DOM element wrapping
           alert("A selected number has already been used. Please select a different number.");
-          $numDiv.removeClass("selected");
-          return; // Exit the function to prevent further execution
+          $(selectedNumbersArray[i]).removeClass("selected");  // Remove only the invalid selection
+          validSelection = false;  // Mark the selection as invalid
         }
       }
-      playedNumbers();
-      rollTheDice();
+      if (validSelection) {  // Proceed only if all selections are valid
+        playedNumbers();
+        rollTheDice();
+      }
     }
   };
 
